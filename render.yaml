@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: clearance-system
+    env: python
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn -k uvicorn.workers.UvicornWorker backend.main:app --bind 0.0.0.0:$PORT --workers 4
+    envVars:
+      - key: SECRET_KEY
+        value: "change-me"
+      - key: DATABASE_URL
+        value: "postgres://user:pass@host:5432/dbname"
+      - key: OPENAI_API_KEY
+        value: ""
+      - key: UNIVERSITY_NAME
+        value: "University Name"
+    autoDeploy: true
